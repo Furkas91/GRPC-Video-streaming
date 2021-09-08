@@ -5,18 +5,24 @@ option objc_class_prefix = "HLW";
 
 
 // The greeting service definition.
-service ImageTest {
+service ProcessService {
   // Sends a greeting
-  rpc Analyse (stream MsgRequest) returns (stream MsgReply);
-  rpc UnaryAnalyse (MsgRequest) returns (MsgReply);
+  rpc Detect (MsgRequest) returns (MsgReply);
 }
 
 // The request message containing the image.
 message MsgRequest {
   bytes img = 1;
 }
-
+// The message describing bounding box
+message Bbox {
+  int32 xmin = 1;
+  int32 ymin = 2;
+  int32 boxwidth = 3;
+  int32 boxheight = 4;
+}
 // The response message containing the reply
 message MsgReply {
-  bytes reply = 1;
+  repeated Bbox reply = 1;
 }
+
