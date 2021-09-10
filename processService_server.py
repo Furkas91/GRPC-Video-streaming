@@ -1,3 +1,4 @@
+import os
 from concurrent import futures
 import time
 import cv2
@@ -43,7 +44,8 @@ def serve():
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=channel_opt)
     processService_pb2_grpc.add_ProcessServiceServicer_to_server(Greeter(), server)
-    server.add_insecure_port('localhost:50051')
+    # port = os.getenv('PORT')
+    server.add_insecure_port(f"0.0.0.0:{os.environ.get('PORT')}")
     server.start()
     try:
         while True:
